@@ -1,12 +1,11 @@
 <template>
-    <div>
+    <div class="f-container">
         <h2>Title</h2>
         <a-input-search size="large" v-model="searchQuery" @search="fetchData" placeholder="输入name"
             style="margin-bottom: 20px; width: 60%;" />
         <a-spin :spinning="loading">
             <div class="content">
                 <div class="table-container">
-                    <!-- <S2Table :dataCfg="dataCfg" :options="tableOptions" /> -->
                     <a-table :row-class-name="(_record, index) => (index % 2 === 1 ? 'table-striped' : null)"
                         :dataSource="dataSource" :columns="columns" bordered />
                 </div>
@@ -19,7 +18,6 @@
 <script setup>
 import { ref, reactive, onMounted, } from 'vue';
 import axios from 'axios';
-import { TableSheet } from '@antv/s2';
 import { Chart } from '@antv/g2';
 
 const searchQuery = ref('');
@@ -132,4 +130,50 @@ onMounted(() => {
 });
 </script>
 
-<style></style>
+<style>
+.content {
+  display: flex;
+  justify-content: space-around;
+  padding: 40px;
+  border-radius: 8px;
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
+  /* background-color: #ffffff; 白色背景 */
+  /* background-color: #2a2a2a; */
+  /* color: rgba(255, 255, 255, 0.87); */
+  /* color: #213547; 深色字体 */
+  min-width: 70vw;
+  min-height: 60vh;
+  font-size: 16px;
+}
+
+.table-container,
+.chart-container {
+  width: 45%;
+  /* background-color: #2a2a2a; */
+  padding: 10px;
+  /* border-radius: 8px; */
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+}
+
+.table-container,
+.chart-container {
+    background-color: #333; 
+    color: rgba(255, 255, 255, 0.87); /* 浅色字体 */
+    box-shadow: 0 1px 4px rgba(255, 255, 255, 0.1);
+  }
+
+
+.f-container {
+    margin: 0 auto;
+    padding: 4rem;
+    text-align: center;
+    font-size: 16px
+}
+
+body {
+ 
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgZmlsbD0ibm9uZSI+PHBhdGggc3Ryb2tlPSIjMDAwIiBzdHJva2Utb3BhY2l0eT0iLjA0IiBzdHJva2Utd2lkdGg9Ii41IiBkPSJNLjI1LjI1aDQ3LjV2NDcuNUguMjV6Ii8+PC9zdmc+),linear-gradient(to bottom,#0000 40%,rgb(232 232 236));
+  background-size: 48px 48px,100% 100%,100%;
+}
+</style>
