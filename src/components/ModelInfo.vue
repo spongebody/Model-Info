@@ -1,7 +1,7 @@
 <template>
     <div class="f-container">
-        <h2>Title</h2>
-        <a-input-search size="large" v-model="searchQuery" @search="fetchData" placeholder="输入name"
+        <h2 style="margin-bottom: 1em;" >Title</h2>
+        <a-input-search size="medium" v-model="searchQuery" @search="fetchData" placeholder="输入name"
             style="margin-bottom: 20px; width: 60%;" />
         <a-spin :spinning="loading">
             <div class="content">
@@ -22,18 +22,7 @@ import { Chart } from '@antv/g2';
 
 const searchQuery = ref('');
 const loading = ref(false);
-const dataCfg = reactive({
-    fields: {
-        rows: ['name'],
-        columns: ['score', 'score2', 'class1', 'class2', 'class3', 'class4'],
-        values: [],
-    },
-    data: [],
-});
-const tableOptions = {
-    width: 400,
-    height: 400,
-};
+
 
 const columns = ref([
     { title: 'Score', dataIndex: 'score', key: 'score', sorter: (a, b) => a.score - b.score },
@@ -90,10 +79,13 @@ let chart;
 
 const fetchData = async () => {
     loading.value = true;
+
     try {
         const response = await axios.get('/mock.json', {
             params: { query: searchQuery.value },
         });
+        
+       
         const data = response.data;
 
         dataSource.value = data
@@ -131,49 +123,61 @@ onMounted(() => {
 </script>
 
 <style>
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(0, 0, 0, 0.87); /* 调整为暗色字体 */
+  background-color: #f4f4f4; /* 浅色背景 */
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.f-container {
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* 内容容器样式 */
 .content {
   display: flex;
-  justify-content: space-around;
-  padding: 40px;
+  justify-content: center;
+  align-items: stretch; /* 确保内容容器的高度一致 */
+  gap: 20px;
+  padding: 20px;
   border-radius: 8px;
   /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
   /* background-color: #ffffff; 白色背景 */
-  /* background-color: #2a2a2a; */
-  /* color: rgba(255, 255, 255, 0.87); */
-  /* color: #213547; 深色字体 */
-  min-width: 70vw;
-  min-height: 60vh;
-  font-size: 16px;
+  color: rgba(0, 0, 0, 0.87); /* 暗色字体 */
+  max-width: 90vw; /* 增加最大宽度 */
+  min-height: 70vh;
+  margin: 0 auto; /* 保证内容居中 */
 }
 
+/* 表格和图表容器样式 */
 .table-container,
 .chart-container {
   width: 45%;
-  /* background-color: #2a2a2a; */
+  background-color: #ffffff; /* 白色背景 */
   padding: 10px;
-  /* border-radius: 8px; */
+  border-radius: 8px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  overflow: auto;
+  color: rgba(0, 0, 0, 0.87); /* 暗色字体 */
+
 }
 
-.table-container,
+/* 统一高度 */
+.table-container {
+  min-height: 300px; /* 设定最小高度以统一容器高度 */
+}
+
 .chart-container {
-    background-color: #333; 
-    color: rgba(255, 255, 255, 0.87); /* 浅色字体 */
-    box-shadow: 0 1px 4px rgba(255, 255, 255, 0.1);
-  }
-
-
-.f-container {
-    margin: 0 auto;
-    padding: 4rem;
-    text-align: center;
-    font-size: 16px
+  min-height: 300px; /* 设定最小高度以统一容器高度 */
 }
 
-body {
- 
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgZmlsbD0ibm9uZSI+PHBhdGggc3Ryb2tlPSIjMDAwIiBzdHJva2Utb3BhY2l0eT0iLjA0IiBzdHJva2Utd2lkdGg9Ii41IiBkPSJNLjI1LjI1aDQ3LjV2NDcuNUguMjV6Ii8+PC9zdmc+),linear-gradient(to bottom,#0000 40%,rgb(232 232 236));
-  background-size: 48px 48px,100% 100%,100%;
-}
+
 </style>
